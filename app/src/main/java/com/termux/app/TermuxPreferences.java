@@ -79,7 +79,7 @@ public final class TermuxPreferences {
         return mShowExtraKeys;
     }
 
-    int getFontSize() {
+    public int getFontSize() {
         return mFontSize;
     }
 

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -18,6 +19,7 @@ import android.util.ArrayMap;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
@@ -81,12 +83,14 @@ public class TerminalEmbeddedService extends Service{
             params.width = 500;
             params.height = 500;
             params.gravity = Gravity.START|Gravity.TOP;
+            params.flags |= WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
             mWindowManager.addView(mRootView, params);
         }
         if (mTerminalView == null){
             LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View view = inflater.inflate(R.layout.terminal_full_parent, mRootView, true);
-            mTerminalView = (TerminalView) view.findViewById(R.id.terminal_view);
+            mTerminalView  = (TerminalView) inflater.inflate(R.layout.terminal_full_parent, mRootView, false);
+            mTerminalView.setTextSize(mSettings.getFontSize());
+            mRootView.addView(mTerminalView);
         }
     }
 
@@ -233,7 +237,12 @@ public class TerminalEmbeddedService extends Service{
             super(context);
             requestFocus();
             setFocusable(true);
-            setFocusableInTouchMode(true);
+            setFocusableInTouchMode(false);
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            return false;
         }
     }
 }
