@@ -64,7 +64,7 @@ public final class TermuxService extends Service implements SessionChangedCallba
     private static final String EXTRA_EXECUTE_IN_BACKGROUND = "com.termux.execute.background";
 
     /** This service is only bound from inside the same process and never uses IPC. */
-    class LocalBinder extends Binder {
+    public class LocalBinder extends Binder {
         public final TermuxService service = TermuxService.this;
     }
 
@@ -250,7 +250,7 @@ public final class TermuxService extends Service implements SessionChangedCallba
         return mTerminalSessions;
     }
 
-    TerminalSession createTermSession(String executablePath, String[] arguments, String cwd, boolean failSafe) {
+    public TerminalSession createTermSession(String executablePath, String[] arguments, String cwd, boolean failSafe) {
         new File(HOME_PATH).mkdirs();
 
         if (cwd == null) cwd = HOME_PATH;

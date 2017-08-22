@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
         android:extractNativeLibs="true"
@@ -110,6 +111,13 @@
         <service
             android:name="com.termux.app.TermuxService"
             android:exported="false" />
+        <service android:name=".embedded.TerminalEmbeddedService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.termux.embedded.action"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </service>
 
         <receiver android:name=".app.TermuxOpenReceiver" />
 

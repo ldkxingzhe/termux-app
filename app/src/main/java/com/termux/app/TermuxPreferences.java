@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-final class TermuxPreferences {
+public final class TermuxPreferences {
 
     @IntDef({BELL_VIBRATE, BELL_BEEP, BELL_IGNORE})
     @Retention(RetentionPolicy.SOURCE)
@@ -44,7 +44,7 @@ final class TermuxPreferences {
     boolean mBackIsEscape;
     boolean mShowExtraKeys;
 
-    TermuxPreferences(Context context) {
+    public TermuxPreferences(Context context) {
         reloadFromProperties(context);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 

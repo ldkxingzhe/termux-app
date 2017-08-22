@@ -9,6 +9,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/embedded" />
+            <option value="$PROJECT_DIR$/embedded-demo" />
             <option value="$PROJECT_DIR$/terminal-emulator" />
             <option value="$PROJECT_DIR$/terminal-view" />
           </set>
