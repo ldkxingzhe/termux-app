@@ -1,5 +1,6 @@
 buildscript {
     repositories {
+	maven { url 'http://10.10.0.3:9081/nexus/content/groups/public/' }
         jcenter()
         google()
     }
