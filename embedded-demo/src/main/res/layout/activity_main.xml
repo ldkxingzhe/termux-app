@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.embedded.demo.MainActivity">
 
     <Button
@@ -11,4 +12,9 @@
         android:text="action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <View
+        android:id="@+id/content"
+        android:background="@android:color/holo_purple"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
-import android.graphics.PixelFormat;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -77,13 +76,14 @@ public class TerminalEmbeddedService extends Service{
     private void makeSureViewExit(){
         if (mRootView == null){
             mRootView = new RootView(this);
-            mRootView.setBackgroundColor(Color.BLUE);
             WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-            params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-            params.width = 500;
-            params.height = 500;
+            params.type = WindowManager.LayoutParams.TYPE_PHONE;
+            params.width = 800;
+            params.height = 800;
             params.gravity = Gravity.START|Gravity.TOP;
-            params.flags |= WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL;
+            params.flags |= WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
             mWindowManager.addView(mRootView, params);
         }
         if (mTerminalView == null){
@@ -151,6 +151,21 @@ public class TerminalEmbeddedService extends Service{
         }
     }
 
+    private void layoutView(int x, int y, int width, int height){
+        Log.d(TAG, "layoutView, and x is " + x + ", y " + y + ", width is" + width + ", height " + height);
+        if (mRootView != null){
+            WindowManager.LayoutParams params = (WindowManager.LayoutParams) mRootView.getLayoutParams();
+            params.width = width;
+            params.height = height;
+            mRootView.setLayoutParams(params);
+            params.x = x;
+            params.y = y;
+            mWindowManager.updateViewLayout(mRootView, params);
+        }else{
+            Log.e(TAG, "layoutView, but mRootView is null");
+        }
+    }
+
     private Binder mBinder = new ITerminalEmbedded.Stub() {
         @Override
         public void writeToTerminal(String sessionName, final String command) throws RemoteException {
@@ -194,6 +209,16 @@ public class TerminalEmbeddedService extends Service{
                     }
                 });
             }
+        }
+
+        @Override
+        public void layoutView(String sessionName, final int x, final int y, final int width, final int height) throws RemoteException {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    TerminalEmbeddedService.this.layoutView(x, y, width, height);
+                }
+            });
         }
 
         @Override

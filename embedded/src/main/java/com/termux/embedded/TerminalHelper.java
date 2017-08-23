@@ -11,6 +11,7 @@ import android.os.Looper;
 import android.os.RemoteException;
 import android.os.ResultReceiver;
 import android.util.Log;
+import android.view.View;
 
 /**
  * A Manager for communicate with Termux App
@@ -20,7 +21,7 @@ public final class TerminalHelper {
     @SuppressWarnings("unused")
     private static final String TAG = "TerminalHelper";
 
-    private String mSessionName;
+    private final String mSessionName;
     private ITerminalEmbedded mITerminalEmbedded;
 
     public TerminalHelper(Context context, String shortName){
@@ -30,6 +31,27 @@ public final class TerminalHelper {
         intent.setPackage("com.termux");
         boolean bindResult = context.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
         Log.v(TAG, "bindService and result is " + bindResult);
+    }
+
+    public void replaceView(final View replaceView){
+        replaceViewInternal(replaceView);
+        replaceView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                replaceViewInternal(replaceView);
+            }
+        });
+    }
+
+    private void replaceViewInternal(View replaceView){
+        int[] location = new int[2];
+        replaceView.getLocationOnScreen(location);
+        int x = location[0], y = location[1];
+        try {
+            mITerminalEmbedded.layoutView(mSessionName, x, y, replaceView.getMeasuredWidth(), replaceView.getMeasuredHeight());
+        } catch (RemoteException e) {
+            dealWithException(e);
+        }
     }
 
     public void onVisible(){

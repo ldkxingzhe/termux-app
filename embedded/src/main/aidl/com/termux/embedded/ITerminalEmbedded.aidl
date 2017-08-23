@@ -10,6 +10,7 @@ interface ITerminalEmbedded {
 
     void onCreate(String sessionName, in ResultReceiver resultReceiver);
     void onVisible(String sessionName);
+    void layoutView(String sessionName, int x, int y, int width, int height);
     void onInVisible(String sessionName);
     void onDestroyed(String sessionName);
 }

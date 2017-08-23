@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final View contentView = findViewById(R.id.content);
         findViewById(R.id.btn_action).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
                     mTerminalHelper = new TerminalHelper(MainActivity.this, "main");
                 }else{
                     mTerminalHelper.onVisible();
+                    mTerminalHelper.replaceView(contentView);
                 }
             }
         });
