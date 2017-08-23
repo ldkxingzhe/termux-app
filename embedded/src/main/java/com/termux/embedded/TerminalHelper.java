@@ -70,6 +70,7 @@ public final class TerminalHelper {
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            Log.d(TAG, "onServiceDisconnected " + name);
             mITerminalEmbedded = null;
         }
     };

@@ -8,7 +8,6 @@ android {
         implementation "com.android.support:support-core-ui:27.1.1"
         implementation project(":terminal-view")
     }
-
     defaultConfig {
         applicationId "com.termux"
         minSdkVersion 21
@@ -16,12 +15,20 @@ android {
         versionCode 61
         versionName "0.61"
     }
-
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    signingConfigs {
+        debug {
+            keyAlias 'debug'
+            keyPassword 'debug123'
+            storeFile file('/home/ke/ldkkeystore.jks')
+            storePassword 'xingzhe'
         }
     }
 }
