@@ -152,6 +152,7 @@ public final class TerminalSession extends TerminalOutput {
     }
 
     /** Inform the attached pty of the new size and reflow or initialize the emulator. */
+    @Override
     public void updateSize(int columns, int rows) {
         if (mEmulator == null) {
             initializeEmulator(columns, rows);
@@ -231,6 +232,7 @@ public final class TerminalSession extends TerminalOutput {
     }
 
     /** Write the Unicode code point to the terminal encoded in UTF-8. */
+    @Override
     public void writeCodePoint(boolean prependEscape, int codePoint) {
         if (codePoint > 1114111 || (codePoint >= 0xD800 && codePoint <= 0xDFFF)) {
             // 1114111 (= 2**16 + 1024**2 - 1) is the highest code point, [0xD800,0xDFFF] is the surrogate range.
@@ -267,6 +269,7 @@ public final class TerminalSession extends TerminalOutput {
         write(mUtf8InputBuffer, 0, bufferPosition);
     }
 
+    @Override
     public TerminalEmulator getEmulator() {
         return mEmulator;
     }

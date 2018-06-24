@@ -33,6 +33,7 @@ import com.termux.terminal.EmulatorDebug;
 import com.termux.terminal.KeyHandler;
 import com.termux.terminal.TerminalBuffer;
 import com.termux.terminal.TerminalEmulator;
+import com.termux.terminal.TerminalOutput;
 import com.termux.terminal.TerminalSession;
 
 /** View displaying and interacting with a {@link TerminalSession}. */
@@ -42,7 +43,7 @@ public final class TerminalView extends View {
     private static final boolean LOG_KEY_EVENTS = false;
 
     /** The currently displayed terminal session, whose emulator is {@link #mEmulator}. */
-    TerminalSession mTermSession;
+    TerminalOutput mTermSession;
     /** Our terminal emulator whose session is {@link #mTermSession}. */
     TerminalEmulator mEmulator;
 
@@ -910,7 +911,7 @@ public final class TerminalView extends View {
         }
     }
 
-    public TerminalSession getCurrentSession() {
+    public TerminalOutput getCurrentSession() {
         return mTermSession;
     }
 

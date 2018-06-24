@@ -4,6 +4,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 
+import com.termux.terminal.TerminalOutput;
 import com.termux.terminal.TerminalSession;
 
 /**
@@ -27,7 +28,7 @@ public interface TerminalViewClient {
 
     void copyModeChanged(boolean copyMode);
 
-    boolean onKeyDown(int keyCode, KeyEvent e, TerminalSession session);
+    boolean onKeyDown(int keyCode, KeyEvent e, TerminalOutput session);
 
     boolean onKeyUp(int keyCode, KeyEvent e);
 
@@ -35,7 +36,7 @@ public interface TerminalViewClient {
 
     boolean readAltKey();
 
-    boolean onCodePoint(int codePoint, boolean ctrlDown, TerminalSession session);
+    boolean onCodePoint(int codePoint, boolean ctrlDown, TerminalOutput session);
 
     boolean onLongPress(MotionEvent event);
 

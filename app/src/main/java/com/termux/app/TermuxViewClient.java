@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.termux.terminal.KeyHandler;
 import com.termux.terminal.TerminalEmulator;
+import com.termux.terminal.TerminalOutput;
 import com.termux.terminal.TerminalSession;
 import com.termux.view.TerminalViewClient;
 
@@ -55,9 +56,9 @@ public final class TermuxViewClient implements TerminalViewClient {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent e, TerminalSession currentSession) {
+    public boolean onKeyDown(int keyCode, KeyEvent e, TerminalOutput currentTerminalOutput) {
         if (handleVirtualKeys(keyCode, e, true)) return true;
-
+        TerminalSession currentSession = (TerminalSession) currentTerminalOutput;
         if (keyCode == KeyEvent.KEYCODE_ENTER && !currentSession.isRunning()) {
             mActivity.removeFinishedSession(currentSession);
             return true;
@@ -121,7 +122,7 @@ public final class TermuxViewClient implements TerminalViewClient {
     }
 
     @Override
-    public boolean onCodePoint(final int codePoint, boolean ctrlDown, TerminalSession session) {
+    public boolean onCodePoint(final int codePoint, boolean ctrlDown, TerminalOutput session) {
         if (mVirtualFnKeyDown) {
             int resultingKeyCode = -1;
             int resultingCodePoint = -1;
@@ -222,7 +223,7 @@ public final class TermuxViewClient implements TerminalViewClient {
             return true;
         } else if (ctrlDown) {
             if (codePoint == 106 /* Ctrl+j or \n */ && !session.isRunning()) {
-                mActivity.removeFinishedSession(session);
+                mActivity.removeFinishedSession((TerminalSession) session);
                 return true;
             }
 

@@ -541,7 +541,7 @@ public final class TermuxActivity extends Activity implements ServiceConnection 
 
     @Nullable
     TerminalSession getCurrentTermSession() {
-        return mTerminalView.getCurrentSession();
+        return (TerminalSession) mTerminalView.getCurrentSession();
     }
 
     @Override
